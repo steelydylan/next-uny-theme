@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "regions": ["hnd1"],
+  "name": "remix",
+  "builds": [{
+    "src": "./next.config.js",
+    "use": "@now/next"
+  }],
+  "routes": [{
+    "src": "/(.*)",
+    "dest": "/$1"
+  }]
+}
