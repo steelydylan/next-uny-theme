@@ -14,7 +14,7 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     });
   }
   const { url: targetUrl } = request.query;
-  const { body: html, url } = await got(targetUrl);
+  const { body: html, url } = await got(targetUrl as string);
   const data = await metascraper({ html, url });
   return response.json({
     status: "success",

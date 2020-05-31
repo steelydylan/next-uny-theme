@@ -12,7 +12,6 @@ export default (props: Props) => {
       .get(url)
       .then(res => res.data)
       .catch(() => ({}));
-    console.log(data);
   };
   React.useEffect(() => {
     scrapeMeta(props.url);
