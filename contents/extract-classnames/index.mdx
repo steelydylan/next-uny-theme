@@ -1,0 +1,98 @@
+---
+title: Node.js製のコマンドラインツールを作った
+date: 2018-05-20
+writtenBy: steelydylan
+category: npm
+---
+
+コマンドラインツールの作り方の勉強として、下のような感じで、htmlから使われているクラスを抽出してCSSに書き出すコマンドラインツールをNode.jsを使って作ってみた。
+
+* * *
+
+> ![](https://avatars2.githubusercontent.com/u/2508691?s=400&v=4)
+> 
+> [steelydylan/extract-classnames](https://github.com/steelydylan/extract-classnames)
+> 
+> GitHub
+> 
+> extract-classnames - extract css classnames from html
+> 
+> * * *
+
+html (input)
+
+    <figure class="photo">
+        <img class="photo__img" src="me.jpg">
+        <figcaption class="photo__caption">
+            <blockquote class="photo__quote">
+            Look at me!
+            </blockquote>
+        </figcaption>
+    </figure>
+
+css (output)
+
+    .photo {
+    
+    }
+    .photo__img {
+    
+    }
+    .photo__caption {
+    
+    }
+    .photo__quote {
+    
+    }
+
+インストール
+------
+
+    npm install extract-classnames
+
+実行
+
+npxが使える場合は下記のコマンドで実行可能。
+
+    npx excn --src ./test/index.html --dest ./test/index.css
+
+npxの環境がない場合は、グローバルインストールすれば\`excn\`だけで実行可能。
+
+    npm install extract-classnames -g
+    excn --src ./test/index.html --dest ./test/index.css
+
+API
+---
+
+また、Node.jsのモジュールとして使う場合のAPIも用意している
+
+extract
+
+```js
+const excn = require('extract-classnames');
+const result = excn.extract(html);
+```
+
+extractByFile
+
+
+```js
+const excn = require('extract-classnames');
+excn.extractByFile('/path/to/filename').then((css) => {
+  console.log(css);
+});
+```
+
+今回、コマンドラインツールを作るにあたってyargsというnpmのモジュールを利用した。簡単にコマンドやオプションが作れてこれ凄く便利！
+
+* * *
+
+> ![](https://avatars1.githubusercontent.com/u/16504989?s=400&v=4)
+> 
+> [yargs/yargs](https://github.com/yargs/yargs)
+> 
+> GitHub
+> 
+> yargs the modern, pirate-themed successor to optimist.
+> 
+> * * *

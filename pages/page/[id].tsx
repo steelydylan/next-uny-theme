@@ -6,9 +6,17 @@ import { Entry } from "@/types";
 import { GetStaticProps, GetStaticPaths } from "next";
 import LazyBackground from "@/components/utils/lazy-background";
 
-export default ({ posts }: { posts: Entry[] }) => {
+export default ({
+  posts,
+  current,
+  max
+}: {
+  posts: Entry[];
+  current: number;
+  max: number;
+}) => {
   return (
-    <Layout type="index">
+    <Layout type="index" current={current} max={max}>
       {posts.map(post => {
         return (
           <div className="uc-grid-cell">
@@ -45,7 +53,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   posts.forEach((post, index) => {
     if ((index + 1) % 6 === 0) {
       paths.push({
-        id: `${(index + 1) / 6 + 1}`
+        params: {
+          id: `${(index + 1) / 6 + 1}`
+        }
       });
     }
   });
@@ -55,9 +65,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = ({ params }) => {
   const posts = getPosts();
   const { id } = params;
-  const index = parseInt(id, 10);
+  const current = parseInt(id, 10) - 1;
   return {
     props: {
+      current: current + 1,
+      max: Math.ceil(posts.length / 6),
       posts: posts
         .sort((postA, postB) => {
           if (postA.data.date > postB.data.date) {
@@ -65,7 +77,7 @@ export const getStaticProps = ({ params }) => {
           }
           return 1;
         })
-        .slice(index, index + 5)
+        .slice(current * 6, current * 6 + 6)
         .map(post => {
           const { content, ...others } = post;
           return others;

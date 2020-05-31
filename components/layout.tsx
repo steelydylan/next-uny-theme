@@ -17,6 +17,8 @@ type Props = {
   children: React.ReactNode;
   title?: string;
   type: "index" | "post";
+  current?: number;
+  max?: number;
 };
 
 const nextSeoConfig = {
@@ -62,7 +64,7 @@ export default (props: Props) => {
           </div>
         </div>
       </main>
-      <Pager type={props.type} />
+      <Pager type={props.type} current={props.current} max={props.max} />
       <Footer />
     </div>
   );
