@@ -9,7 +9,7 @@ export default () => {
           <a href="/daily/aboutme">About</a>
         </Link>
         <Link href="/[categoryId]/[id]" as="/daily/portfolio">
-          <a href="/portfolio.html">Portfolio</a>
+          <a href="/daily/portfolio">Portfolio</a>
         </Link>
         <a href="https://github.com/steelydylan">GitHub</a>
       </div>

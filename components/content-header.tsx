@@ -8,10 +8,6 @@ const ContentHeader = styled.header`
   border-bottom: solid 1px var(--c-gray-border);
   padding-bottom: 1rem;
 `;
-const ContentTitle = styled.h1`
-  font-size: 2.4rem;
-  line-height: 1.5;
-`;
 const AuthorA = styled.a`
   margin-top: 1rem;
   display: inline-flex;
@@ -63,7 +59,6 @@ export default ({ data }: { data: EntryData }) => {
     : null;
   return (
     <ContentHeader>
-      <ContentTitle>{data.title}</ContentTitle>
       <AuthorLink writtenBy={data.writtenBy}>
         {dateFormatted ? (
           <time>

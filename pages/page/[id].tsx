@@ -8,7 +8,7 @@ import LazyBackground from "@/components/utils/lazy-background";
 
 export default ({ posts }: { posts: Entry[] }) => {
   return (
-    <Layout>
+    <Layout type="index">
       {posts.map(post => {
         return (
           <div className="uc-grid-cell">
@@ -45,7 +45,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   posts.forEach((post, index) => {
     if ((index + 1) % 6 === 0) {
       paths.push({
-        id: `${(index + 1) / 6}`
+        id: `${(index + 1) / 6 + 1}`
       });
     }
   });

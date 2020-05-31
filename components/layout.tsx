@@ -15,6 +15,8 @@ import Footer from "./footer";
 
 type Props = {
   children: React.ReactNode;
+  title?: string;
+  type: "index" | "post";
 };
 
 const nextSeoConfig = {
@@ -45,7 +47,7 @@ export default (props: Props) => {
         <link rel="stylesheet" href="/bundle.css" />
       </Head>
       <Header />
-      <Hero />
+      <Hero title={props.title} />
       <main className="uc-content content">
         <div className="uc-section">
           <div className="uc-grid _small-col-full">
@@ -60,7 +62,7 @@ export default (props: Props) => {
           </div>
         </div>
       </main>
-      <Pager />
+      <Pager type={props.type} />
       <Footer />
     </div>
   );

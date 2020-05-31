@@ -7,7 +7,7 @@ import LazyBackground from "@/components/utils/lazy-background";
 
 export default ({ posts }: { posts: Entry[] }) => {
   return (
-    <Layout>
+    <Layout type="index">
       {posts.map(post => {
         return (
           <div className="uc-grid-cell">

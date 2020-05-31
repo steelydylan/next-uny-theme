@@ -20,7 +20,7 @@ export default ({ entry, category, errorCode }: DetailProps) => {
   // }
 
   return (
-    <Layout>
+    <Layout title={entry.data.title} type="post">
       {entry && (
         <>
           {entry.data && (
