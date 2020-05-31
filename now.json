@@ -1,7 +1,7 @@
 {
   "version": 2,
   "regions": ["hnd1"],
-  "name": "remix",
+  "name": "blog",
   "builds": [{
     "src": "./next.config.js",
     "use": "@now/next"
