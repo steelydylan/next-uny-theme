@@ -31,8 +31,8 @@ export default (props: Props) => {
         );
       } else if (i === 1 && i !== current) {
         lis.push(
-          <Link href="/page/[id]" as="/page/1">
-            <a href="/page/1">
+          <Link href="/">
+            <a href="/">
               <span>1</span>
             </a>
           </Link>
