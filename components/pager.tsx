@@ -19,6 +19,14 @@ export default (props: Props) => {
             <span>{i}</span>
           </li>
         );
+      } else if (i === 1 && i !== current) {
+        lis.push(
+          <Link href="/">
+            <a href="/">
+              <span>1</span>
+            </a>
+          </Link>
+        );
       } else if (Math.abs(i - current) < 4) {
         lis.push(
           <li>
@@ -28,14 +36,6 @@ export default (props: Props) => {
               </a>
             </Link>
           </li>
-        );
-      } else if (i === 1 && i !== current) {
-        lis.push(
-          <Link href="/">
-            <a href="/">
-              <span>1</span>
-            </a>
-          </Link>
         );
       } else if (i === max && i !== current) {
         lis.push(
