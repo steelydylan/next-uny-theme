@@ -1,7 +1,12 @@
 import * as React from "react";
 import Link from "next/link";
 
-export default () => {
+type Props = {
+  open: boolean;
+  onClick: () => void;
+};
+
+export default ({ onClick, open }: Props) => {
   return (
     <>
       <header className="uc-header _ghost">
@@ -20,10 +25,12 @@ export default () => {
           <a href="https://github.com/steelydylan">GitHub</a>
         </div>
         <div
-          className="uc-menu-btn _hide-medium _hide-large"
+          className={`uc-menu-btn _hide-medium _hide-large${
+            open ? " _is-active" : ""
+          }`}
           data-open-target="#menu"
         >
-          <button type="button">
+          <button type="button" onClick={onClick}>
             <i className="uc-menu-btn-icon" />
           </button>
         </div>

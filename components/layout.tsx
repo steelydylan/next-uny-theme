@@ -8,10 +8,11 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import Head from "next/head";
 import Pager from "@/components/pager";
-import Side from "./side";
-import Header from "./header";
-import Hero from "./hero";
-import Footer from "./footer";
+import Offcanvas from "@/components/offcanvas";
+import Side from "@/components/side";
+import Header from "@/components/header";
+import Hero from "@/components/hero";
+import Footer from "@/components/footer";
 
 type Props = {
   children: React.ReactNode;
@@ -40,7 +41,11 @@ const nextSeoConfig = {
 
 library.add(faTwitter, faInstagram, faGithub);
 
+const { useState } = React;
+
 export default (props: Props) => {
+  const [openOffcanvas, setOpenOffcanvas] = useState(false);
+
   return (
     <div className="_theme-blog _theme-entry">
       <DefaultSeo {...nextSeoConfig} />
@@ -48,7 +53,8 @@ export default (props: Props) => {
         <link rel="stylesheet" href="/blog-theme.css" />
         <link rel="stylesheet" href="/bundle.css" />
       </Head>
-      <Header />
+      <Header open={openOffcanvas} onClick={() => setOpenOffcanvas(!openOffcanvas)} />
+      <Offcanvas open={openOffcanvas} />
       <Hero title={props.title} />
       <main className="uc-content content">
         <div className="uc-section">

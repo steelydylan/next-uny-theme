@@ -36,6 +36,12 @@ const categories: Category[] = [
     title: "CSS",
     imagePath: "https://twemoji.maxcdn.com/2/svg/2728.svg",
     description: ""
+  },
+  {
+    id: "react",
+    title: "React",
+    imagePath: "https://twemoji.maxcdn.com/2/svg/2728.svg",
+    description: ""
   }
 ];
 

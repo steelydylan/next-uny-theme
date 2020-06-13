@@ -1,0 +1,86 @@
+---
+title: Modal上でYoutubeやVimeoなどを再生するReactコンポーネントを作った。
+date: 2017-02-14
+writtenBy: steelydylan
+category: react
+---
+
+[![](https://appleple.github.io/react-modal-video/images/ogp.png)](https://appleple.github.io/react-modal-video/) 
+
+React Modal Video
+
+* * *
+
+先日仕事でYoutubeやVimeoの動画をモーダルウィンドウで再生するjQueryプラグイン（[Modal Video](https://github.com/appleple/modal-video)）を作った。今回せっかくなのでReact コンポーネントとしても[react-modal-video](https://appleple.github.io/react-modal-video/)という名前でnpmに公開した。特徴としては、以下の2つ
+
+*   キーボードナビゲーションとスクリーンリーダーに対するアクセシビリティ対応
+*   モーダル出現時、Leave時のアニメーション
+
+キーボードナビゲーションとスクリーンリーダーに対するアクセシビリティ対応
+------------------------------------
+
+とくに苦労したのはアクセシビリティへの対応。aria属性の付与などは問題なかったが、キーボードに対するアクセシビリティ対応に苦戦した。キーボード操作を可能にするには生のDOMを取得しなければならない。しかし、ReactからDOM要素を取得する方法がわからなかったからだ。何かいい方法はないか探したところ、`ref属性`をつけておけばその要素のDOMを直接Reactから取得可能ということがわかった。
+
+    <button className={this.props.classNames.modalVideoCloseBtn} aria-label={this.props.aria.dismissBtnMessage} ref='modalbtn' onKeyDown={this.updateFocus} />
+
+    const modalbtn = ReactDOM.findDOMNode(this.refs.modalbtn)
+
+そして、タブキーをつかったフォーカスを制御するために現在focusされている要素を取得する必要があった。  
+ただ、jQueryをつかわないで、その要素がfocusされているかどうかを調べる手段がなかなか見つからなかった。ようやくVanilaJSでは、document.activeElementに現在フォーカスされている要素が格納されていることがわかった。つまり先ほどReactDOMで取得した要素とdocument.activeElementが同じなら、その要素はフォーカスされているということだ。
+
+    modal === document.activeElement
+
+モーダル出現時、Leave時のアニメーション
+----------------------
+
+モーダルが出現する瞬間と消える瞬間にアニメーションをかけようと思った。ただそのためだけに新たにコンポーネントにstateを用意するのも少し違う気がしたのでなにかいいプラグインはないか探したところ、`react-addons-css-transition-group`という素晴らしいプラグインを見つけた。このプラグインを使えば要素がDOM上に出現する際と削除される瞬間に自動でその要素にクラスが付与される。例えば、下のソースコードのtransitonNameに対して、`modal-video-effect`と設定しておけば、そのモーダルの出現時には`modal-video-effect-enter`、leave時には`modal-video-effect-leave`というクラスが付与される。そのクラスに対してCSSで`transition`を設定しておけばアニメーションができるというわけ。
+
+
+```jsx
+<ReactCSSTransitionGroup
+  transitionName={this.props.classNames.modalVideoEffect}
+  transitionEnterTimeout={this.props.animationSpeed}
+  transitionLeaveTimeout={this.props.animationSpeed}
+  >
+  {(() => {
+    if (this.state.isOpen) {
+      return (
+        <div className={this.props.classNames.modalVideo} tabIndex='-1' role='dialog'
+          aria-label={this.props.aria.openMessage} onClick={this.closeModal} ref='modal' onKeyDown={this.updateFocus}>
+          <div className={this.props.classNames.modalVideoBody}>
+            <div className={this.props.classNames.modalVideoInner}>
+              <div className={this.props.classNames.modalVideoIframeWrap} style={style}>
+                <button className={this.props.classNames.modalVideoCloseBtn} aria-label={this.props.aria.dismissBtnMessage} ref='modalbtn' onKeyDown={this.updateFocus} />
+                <iframe width='460' height='230' src={this.getVideoUrl(this.props, this.props.videoId)} frameBorder='0' allowFullScreen={this.props.allowFullScreen} tabIndex='-1' />
+              </div>
+            </div>
+          </div>
+        </div>)
+    }
+  })()}
+</ReactCSSTransitionGroup>
+```
+デモ
+--
+
+今回作った`react-modal-video`のデモを用意した。下のボタンを押せば、先ほど述べたアクセシビリティ対応やアニメーションが確認出来る。
+
+
+
+今回作成した React コンポーネントは下記のコマンドでインストールできる。
+
+```
+npm install react-modal-video
+```
+
+以下のページに今回作ったコンポーネントに関する詳しい説明を書いておいた。
+
+* * *
+
+> ![](https://appleple.github.io/react-modal-video/images/ogp.png)
+> 
+> [React Modal Video Component made with love by appleple](https://appleple.github.io/react-modal-video/)
+> 
+> react-modal-video is a React Modal Video Component to play youtube/vimeo on modal windows
+> 
+> * * *
