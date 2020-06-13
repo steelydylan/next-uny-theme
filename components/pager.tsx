@@ -21,11 +21,13 @@ export default (props: Props) => {
         );
       } else if (i === 1 && i !== current) {
         lis.push(
-          <Link href="/">
-            <a href="/">
-              <span>1</span>
-            </a>
-          </Link>
+          <li>
+            <Link href="/">
+              <a href="/">
+                <span>1</span>
+              </a>
+            </Link>
+          </li>
         );
       } else if (Math.abs(i - current) < 4) {
         lis.push(
